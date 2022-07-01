@@ -1,0 +1,94 @@
+﻿@model AjaxWork.Models.TeacherModel
+
+@{
+    ViewBag.Title = "Add Teacher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<form id="form">
+    <label for="fname">Teacher ID:</label>
+    <input type="text" id="fname" name="fname"><br><br>
+    <label for="lname">Teacher Name:</label>
+    <input type="text" id="lname" name="lname"><br><br>
+    <label for="add">Address:</label>
+    <input type="text" id="add" name="lname"><br><br>
+    <input type="button" class="btn btn-primary" value="Submit" id="btnDraft">
+</form>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#btnDraft").click(function (x) {
+            debugger;
+            /*$("#divLoader").show();*/
+            var formdata = $("#form").serialize();
+            console.log(formdata);
+            /* alert(formdata);*/
+
+            ajaxCall("/Home/addteacher", formdata, function (result) {
+                if (!result.Response) {
+                    /* $("#divLoader").hide();*/
+                    swal({ text: result.Message, icon: "warning" });
+                    console.error(result.Error);
+                }
+                else {
+                    swal({
+                        title: "Good job!",
+                        text: result.Message,
+                        icon: "success",
+                        button: "Aww yiss!",
+                    });
+                    /* $("#divLoader").hide();*/
+                    /*swal(result.Message);*/
+                }
+            });
+            //$.ajax({
+            //    url: "/Home/create",
+            //    type: "POST",
+            //    dataType: 'json',
+            //    data: formdata
+
+            //});
+        });
+    });
+</script>
+
+@*<script>
+        $(document).ready(function () {
+            $("#btnDraft").click(function (x) {
+                debugger;
+                var formdata = $("#form").serialize();
+                console.log(formdata);
+                alert(formdata);
+
+                ajaxCall("/Home/addteacher", formdata,function (result){
+                    if (!result.Response) {
+                        /* $("#divLoader").hide();*/
+                        swal({ text: result.Message, icon: "warning" });
+                        console.error(result.Error);
+                    }
+                    else {
+                        swal({
+                            title: "Good job!",
+                            text: result.Message,
+                            icon: "success",
+                            button: "Aww yiss!",
+                        });
+                    }
+                    });
+
+                //$.ajax({
+                //    url: "/Home/create",
+                //    type: "POST",
+                //    dataType: 'json',
+                //    data: formdata
+
+                //});
+            });
+        });
+</script>*@
+
